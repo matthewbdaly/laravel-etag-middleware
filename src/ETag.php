@@ -4,12 +4,14 @@ namespace Matthewbdaly\ETagMiddleware;
 
 use Closure;
 
-class ETag {
+class ETag
+{
     /**
-     * Implement Etag support
+     * Implement Etag support.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -22,7 +24,7 @@ class ETag {
             $etag = md5($response->getContent());
             $requestEtag = str_replace('"', '', $request->getETags());
             // Check to see if Etag has changed
-            if($requestEtag && $requestEtag[0] == $etag) {
+            if ($requestEtag && $requestEtag[0] == $etag) {
                 $response->setNotModified();
             }
             // Set Etag
