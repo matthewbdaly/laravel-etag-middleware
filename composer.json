@@ -1,6 +1,7 @@
 {
     "name": "matthewbdaly/laravel-etag-middleware",
     "description": "A Laravel middleware for adding ETags to HTTP requests to improve response times",
+    "keywords": ["laravel", "etags", "etag", "middleware", "http"],
     "type": "library",
     "require": {
         "illuminate/support": "5.1.x|5.2.x|5.3.x|5.4.x",

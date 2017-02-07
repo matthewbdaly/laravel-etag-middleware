@@ -1,11 +1,8 @@
 <?php
 
-namespace Tests\Unit\Middleware;
-
 use Mockery as m;
 use Illuminate\Http\Request;
 use Matthewbdaly\ETagMiddleware\ETag;
-use PHPUnit_Framework_TestCase;
 
 class ETagTest extends PHPUnit_Framework_TestCase
 {
@@ -52,5 +49,10 @@ class ETagTest extends PHPUnit_Framework_TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) { 
             return $response;
         });
+    }
+
+    public function tearDown()
+    {
+        m::close();
     }
 }
