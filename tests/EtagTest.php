@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Middleware;
 
-use Mockery as m;
 use Illuminate\Http\Request;
 use Matthewbdaly\ETagMiddleware\ETag;
+use Mockery as m;
 use PHPUnit_Framework_TestCase;
 
-class ETagTest extends PHPUnit_Framework_TestCase
+class EtagTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Test new request not cached
+     * Test new request not cached.
      *
      * @return void
      */
@@ -25,13 +25,13 @@ class ETagTest extends PHPUnit_Framework_TestCase
 
         // Pass it to the middleware
         $middleware = new ETag();
-        $middlewareResponse = $middleware->handle($request, function () use ($response) { 
+        $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
     }
 
     /**
-     * Test repeated request not modified
+     * Test repeated request not modified.
      *
      * @return void
      */
@@ -44,12 +44,12 @@ class ETagTest extends PHPUnit_Framework_TestCase
 
         // Create request
         $request = Request::create('http://example.com/admin', 'GET', [], [], [], [
-            'ETag' => md5('blah')
+            'ETag' => md5('blah'),
         ]);
 
         // Pass it to the middleware
         $middleware = new ETag();
-        $middlewareResponse = $middleware->handle($request, function () use ($response) { 
+        $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
     }
