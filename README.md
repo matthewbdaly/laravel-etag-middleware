@@ -1,6 +1,8 @@
 # laravel-etag-middleware
 A Laravel middleware for adding ETags to HTTP requests to improve response times
 
+[![Build Status](https://travis-ci.org/matthewbdaly/laravel-etag-middleware.svg?branch=master)](https://travis-ci.org/matthewbdaly/laravel-etag-middleware)
+
 Installation
 ------------
 
