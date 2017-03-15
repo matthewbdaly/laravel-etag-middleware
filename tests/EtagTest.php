@@ -1,10 +1,12 @@
 <?php
 
+namespace Tests;
+
 use Illuminate\Http\Request;
 use Matthewbdaly\ETagMiddleware\ETag;
 use Mockery as m;
 
-class EtagTest extends PHPUnit_Framework_TestCase
+class EtagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test new request not cached.
