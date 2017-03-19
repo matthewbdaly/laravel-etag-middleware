@@ -45,7 +45,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('Illuminate\Http\Request');
         $request->shouldReceive('isMethod')->with('get')->andReturn(true);
         $request->shouldReceive('getETags')->andReturn([
-            md5('blah')
+            md5('blah'),
         ]);
 
         // Pass it to the middleware
