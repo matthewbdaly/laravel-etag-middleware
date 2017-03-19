@@ -12,7 +12,8 @@
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.2",
         "mockery/mockery": "^0.9.7",
-        "squizlabs/php_codesniffer": "^2.8"
+        "squizlabs/php_codesniffer": "^2.8",
+        "satooshi/php-coveralls": "^1.0"
     },
     "license": "MIT",
     "authors": [
