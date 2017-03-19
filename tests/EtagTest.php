@@ -42,8 +42,10 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $response->shouldReceive('setNotModified');
 
         // Create request
-        $request = Request::create('http://example.com/admin', 'GET', [], [], [], [
-            'ETag' => md5('blah'),
+        $request = m::mock('Illuminate\Http\Request');
+        $request->shouldReceive('isMethod')->with('get')->andReturn(true);
+        $request->shouldReceive('getETags')->andReturn([
+            md5('blah')
         ]);
 
         // Pass it to the middleware
