@@ -2,6 +2,7 @@
 A Laravel middleware for adding ETags to HTTP requests to improve response times
 
 [![Build Status](https://travis-ci.org/matthewbdaly/laravel-etag-middleware.svg?branch=master)](https://travis-ci.org/matthewbdaly/laravel-etag-middleware)
+[![Coverage Status](https://coveralls.io/repos/github/matthewbdaly/laravel-etag-middleware/badge.svg?branch=master)](https://coveralls.io/github/matthewbdaly/laravel-etag-middleware?branch=master)
 
 Installation
 ------------
