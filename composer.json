@@ -4,10 +4,10 @@
     "keywords": ["laravel", "etags", "etag", "middleware", "http"],
     "type": "library",
     "require": {
-        "illuminate/support": "5.1.x|5.2.x|5.3.x|5.4.x",
+        "illuminate/support": "5.1.x|5.2.x|5.3.x|5.4.x|5.5.x",
         "symfony/http-foundation": "~2.7|~3.0",
         "symfony/http-kernel": "~2.7|~3.0",
-        "illuminate/http": "5.1.x|5.2.x|5.3.x|5.4.x"
+        "illuminate/http": "5.1.x|5.2.x|5.3.x|5.4.x|5.5.x"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.2",
