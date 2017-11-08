@@ -2,19 +2,23 @@
 
 namespace Matthewbdaly\ETagMiddleware;
 
+use Illuminate\Http\Request;
 use Closure;
 
+/**
+ * ETag middleware
+ */
 class ETag
 {
     /**
      * Implement Etag support.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Illuminate\Http\Request $request The HTTP request.
+     * @param \Closure                 $next    Closure for the response.
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         // Get response
         $response = $next($request);
