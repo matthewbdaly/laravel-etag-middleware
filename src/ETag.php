@@ -2,11 +2,11 @@
 
 namespace Matthewbdaly\ETagMiddleware;
 
-use Illuminate\Http\Request;
 use Closure;
+use Illuminate\Http\Request;
 
 /**
- * ETag middleware
+ * ETag middleware.
  */
 class ETag
 {

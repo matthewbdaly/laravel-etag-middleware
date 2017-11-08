@@ -7,7 +7,7 @@ use Matthewbdaly\ETagMiddleware\ETag;
 use Mockery as m;
 
 /**
- * ETag test
+ * ETag test.
  */
 class EtagTest extends \PHPUnit_Framework_TestCase
 {
@@ -59,7 +59,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tear down the test
+     * Tear down the test.
      *
      * @return void
      */
