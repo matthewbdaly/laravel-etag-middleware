@@ -20,20 +20,26 @@ class ETag
      */
     public function handle(Request $request, Closure $next)
     {
+        // If this was not a get or head request, just return
+        if (!$request->isMethod('get') && !$request->isMethod('head')) {
+            return $next($request);
+        }
+        $initialMethod = $request->method();
+        $request->setMethod('get'); // force to get in order to recieve content
+
         // Get response
         $response = $next($request);
-        // If this was a GET request...
-        if ($request->isMethod('get')) {
-            // Generate Etag
-            $etag = md5($response->getContent());
-            $requestEtag = str_replace('"', '', $request->getETags());
-            // Check to see if Etag has changed
-            if ($requestEtag && $requestEtag[0] == $etag) {
-                $response->setNotModified();
-            }
-            // Set Etag
-            $response->setEtag($etag);
+        // Generate Etag
+        $etag = md5($response->getContent());
+        $requestEtag = str_replace('"', '', $request->getETags());
+        // Check to see if Etag has changed
+        if ($requestEtag && $requestEtag[0] == $etag) {
+            $response->setNotModified();
         }
+        // Set Etag
+        $response->setEtag($etag);
+
+        $request->setMethod($initialMethod); // set back to original method
         // Send response
         return $response;
     }
