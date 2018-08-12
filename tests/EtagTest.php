@@ -47,6 +47,8 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         // Create request
         $request = m::mock('Illuminate\Http\Request');
         $request->shouldReceive('isMethod')->with('get')->andReturn(true);
+        $request->shouldReceive('method')->andReturn('get');
+        $request->shouldReceive('setMethod')->with('get')->andReturnTrue();
         $request->shouldReceive('getETags')->andReturn([
             md5('blah'),
         ]);
