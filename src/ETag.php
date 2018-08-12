@@ -25,7 +25,7 @@ class ETag
             return $next($request);
         }
         $initialMethod = $request->method();
-        $request->setMethod('get'); // force to get in order to recieve content
+        $request->setMethod('get'); // force to get in order to receive content
 
         // Get response
         $response = $next($request);
