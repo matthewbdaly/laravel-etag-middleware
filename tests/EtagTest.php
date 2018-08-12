@@ -61,7 +61,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test request not GET or POST
+     * Test request not GET or POST.
      *
      * @return void
      */
