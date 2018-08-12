@@ -61,6 +61,30 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test request not GET or POST
+     *
+     * @return void
+     */
+    public function testNotGetOrPost()
+    {
+        // Create mock response
+        $response = m::mock('Illuminate\Http\Response');
+        $response->shouldNotReceive('setEtag');
+        $response->shouldNotReceive('setNotModified');
+
+        // Create request
+        $request = m::mock('Illuminate\Http\Request');
+        $request->shouldReceive('isMethod')->with('get')->andReturn(false);
+        $request->shouldReceive('isMethod')->with('head')->andReturn(false);
+
+        // Pass it to the middleware
+        $middleware = new ETag();
+        $middlewareResponse = $middleware->handle($request, function () use ($response) {
+            return $response;
+        });
+    }
+
+    /**
      * Tear down the test.
      *
      * @return void
