@@ -18,9 +18,16 @@ class EtagTest extends \PHPUnit_Framework_TestCase
      */
     public function testModified()
     {
+        // Create mock header
+        $headers = m::mock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
+        $headers->shouldReceive('all')->andReturn(['Content-Type' => 'text/html']);
+
         // Create mock response
-        $response = m::mock('Illuminate\Http\Response')->shouldReceive('getContent')->once()->andReturn('blah')->getMock();
-        $response->shouldReceive('setEtag')->with(md5('blah'));
+        $response = m::mock('Illuminate\Http\Response');
+        $response->headers = $headers;
+        $response->shouldReceive('getContent')->once()->andReturn('blah');
+        $response->shouldReceive('setEtag')->with(md5('{"Content-Type":"text\/html"}blah'));
+        $response->shouldNotReceive('setNotModified');
 
         // Create request
         $request = Request::create('http://example.com/admin', 'GET');
@@ -39,10 +46,16 @@ class EtagTest extends \PHPUnit_Framework_TestCase
      */
     public function testNotModified()
     {
+        // Create mock header
+        $headers = m::mock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
+        $headers->shouldReceive('all')->andReturn(['content-type' => 'text/html']);
+
         // Create mock response
-        $response = m::mock('Illuminate\Http\Response')->shouldReceive('getContent')->once()->andReturn('blah')->getMock();
-        $response->shouldReceive('setEtag')->with(md5('blah'));
-        $response->shouldReceive('setNotModified');
+        $response = m::mock('Illuminate\Http\Response');
+        $response->headers = $headers;
+        $response->shouldReceive('getContent')->once()->andReturn('blah');
+        $response->shouldReceive('setEtag')->with(md5('{"content-type":"text\/html"}blah'));
+        $response->shouldReceive('setNotModified')->once();
 
         // Create request
         $request = m::mock('Illuminate\Http\Request');
@@ -50,7 +63,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('method')->andReturn('get');
         $request->shouldReceive('setMethod')->with('get')->andReturnTrue();
         $request->shouldReceive('getETags')->andReturn([
-            md5('blah'),
+            md5('{"content-type":"text\/html"}blah'),
         ]);
 
         // Pass it to the middleware
@@ -61,11 +74,11 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test request not GET or POST.
+     * Test request not GET or HEAD.
      *
      * @return void
      */
-    public function testNotGetOrPost()
+    public function testNotGetOrHead()
     {
         // Create mock response
         $response = m::mock('Illuminate\Http\Response');
