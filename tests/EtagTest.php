@@ -20,13 +20,13 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     {
         // Create mock header
         $headers = m::mock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
-        $headers->shouldReceive('all')->andReturn(['Content-Type' => 'text/html']);
+        $headers->shouldReceive('get')->with('origin')->andReturn(['origin' => 'http://example.com']);
 
         // Create mock response
         $response = m::mock('Illuminate\Http\Response');
         $response->headers = $headers;
         $response->shouldReceive('getContent')->once()->andReturn('blah');
-        $response->shouldReceive('setEtag')->with(md5('{"Content-Type":"text\/html"}blah'));
+        $response->shouldReceive('setEtag')->with(md5('{"origin":"http:\/\/example.com"}blah'));
         $response->shouldNotReceive('setNotModified');
 
         // Create request
@@ -48,13 +48,13 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     {
         // Create mock header
         $headers = m::mock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
-        $headers->shouldReceive('all')->andReturn(['content-type' => 'text/html']);
+        $headers->shouldReceive('get')->with('origin')->andReturn(['origin' => 'http://example.com']);
 
         // Create mock response
         $response = m::mock('Illuminate\Http\Response');
         $response->headers = $headers;
         $response->shouldReceive('getContent')->once()->andReturn('blah');
-        $response->shouldReceive('setEtag')->with(md5('{"content-type":"text\/html"}blah'));
+        $response->shouldReceive('setEtag')->with(md5('{"origin":"http:\/\/example.com"}blah'));
         $response->shouldReceive('setNotModified')->once();
 
         // Create request
@@ -63,7 +63,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('method')->andReturn('get');
         $request->shouldReceive('setMethod')->with('get')->andReturnTrue();
         $request->shouldReceive('getETags')->andReturn([
-            md5('{"content-type":"text\/html"}blah'),
+            md5('{"origin":"http:\/\/example.com"}blah'),
         ]);
 
         // Pass it to the middleware
