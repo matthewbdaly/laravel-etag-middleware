@@ -38,6 +38,8 @@ class EtagTest extends TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
+
+        $this->assertSame($response, $middlewareResponse);
     }
 
     /**
@@ -72,6 +74,8 @@ class EtagTest extends TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
+
+        $this->assertSame($response, $middlewareResponse);
     }
 
     /**
@@ -96,6 +100,8 @@ class EtagTest extends TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
+
+        $this->assertSame($response, $middlewareResponse);
     }
 
     /**
