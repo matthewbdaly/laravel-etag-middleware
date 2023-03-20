@@ -35,7 +35,7 @@ class ETag
         $response = $next($request);
 
         // Generate Etag
-        $etag = md5(json_encode($response->headers->get('origin')).$response->getContent());
+        $etag = md5(json_encode($response->headers->get('origin')) . $response->getContent());
 
         // Load the Etag sent by client
         $requestEtag = str_replace('"', '', $request->getETags());
