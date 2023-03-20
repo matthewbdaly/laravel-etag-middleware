@@ -16,7 +16,7 @@ class ETag
      * @param \Illuminate\Http\Request $request The HTTP request.
      * @param \Closure                 $next    Closure for the response.
      *
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function handle(Request $request, Closure $next)
     {
@@ -32,10 +32,11 @@ class ETag
         $request->setMethod('get');
 
         // Get response
+        /** @var \Illuminate\Http\Response $response */
         $response = $next($request);
 
         // Generate Etag
-        $etag = md5(json_encode($response->headers->get('origin')) . $response->getContent());
+        $etag = md5(json_encode($response->headers->get('origin')) . (string)$response->getContent());
 
         // Load the Etag sent by client
         $requestEtag = str_replace('"', '', $request->getETags());
