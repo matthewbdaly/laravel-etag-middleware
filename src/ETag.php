@@ -4,6 +4,7 @@ namespace Matthewbdaly\ETagMiddleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * ETag middleware.
@@ -13,8 +14,9 @@ class ETag
     /**
      * Implement Etag support.
      *
-     * @param \Illuminate\Http\Request $request The HTTP request.
-     * @param \Closure                 $next    Closure for the response.
+     * @param Request $request The HTTP request.
+     * @param Closure $next    Closure for the response.
+     * @psalm-param Closure(Request): Response $next    Closure for the response.
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +34,7 @@ class ETag
         $request->setMethod('get');
 
         // Get response
-        /** @var \Illuminate\Http\Response $response */
+        /** @var Response $response */
         $response = $next($request);
 
         // Generate Etag
