@@ -5,11 +5,12 @@ namespace Tests;
 use Illuminate\Http\Request;
 use Matthewbdaly\ETagMiddleware\ETag;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ETag test.
  */
-class EtagTest extends \PHPUnit_Framework_TestCase
+class EtagTest extends TestCase
 {
     /**
      * Test new request not cached.
@@ -20,13 +21,13 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     {
         // Create mock header
         $headers = m::mock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
-        $headers->shouldReceive('get')->with('origin')->andReturn(['origin' => 'http://example.com']);
+        $headers->shouldReceive('get')->with('origin')->andReturn('http://example.com');
 
         // Create mock response
         $response = m::mock('Illuminate\Http\Response');
         $response->headers = $headers;
         $response->shouldReceive('getContent')->once()->andReturn('blah');
-        $response->shouldReceive('setEtag')->with(md5('{"origin":"http:\/\/example.com"}blah'));
+        $response->shouldReceive('setEtag')->with(md5('"http:\/\/example.com"blah'));
         $response->shouldNotReceive('setNotModified');
 
         // Create request
@@ -37,6 +38,8 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
+
+        $this->assertSame($response, $middlewareResponse);
     }
 
     /**
@@ -48,13 +51,13 @@ class EtagTest extends \PHPUnit_Framework_TestCase
     {
         // Create mock header
         $headers = m::mock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
-        $headers->shouldReceive('get')->with('origin')->andReturn(['origin' => 'http://example.com']);
+        $headers->shouldReceive('get')->with('origin')->andReturn('http://example.com');
 
         // Create mock response
         $response = m::mock('Illuminate\Http\Response');
         $response->headers = $headers;
         $response->shouldReceive('getContent')->once()->andReturn('blah');
-        $response->shouldReceive('setEtag')->with(md5('{"origin":"http:\/\/example.com"}blah'));
+        $response->shouldReceive('setEtag')->with(md5('"http:\/\/example.com"blah'));
         $response->shouldReceive('setNotModified')->once();
 
         // Create request
@@ -63,7 +66,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('method')->andReturn('get');
         $request->shouldReceive('setMethod')->with('get')->andReturnTrue();
         $request->shouldReceive('getETags')->andReturn([
-            md5('{"origin":"http:\/\/example.com"}blah'),
+            md5('"http:\/\/example.com"blah'),
         ]);
 
         // Pass it to the middleware
@@ -71,6 +74,8 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
+
+        $this->assertSame($response, $middlewareResponse);
     }
 
     /**
@@ -95,6 +100,8 @@ class EtagTest extends \PHPUnit_Framework_TestCase
         $middlewareResponse = $middleware->handle($request, function () use ($response) {
             return $response;
         });
+
+        $this->assertSame($response, $middlewareResponse);
     }
 
     /**
@@ -102,7 +109,7 @@ class EtagTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

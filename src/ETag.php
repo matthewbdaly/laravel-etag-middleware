@@ -4,6 +4,7 @@ namespace Matthewbdaly\ETagMiddleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * ETag middleware.
@@ -13,10 +14,11 @@ class ETag
     /**
      * Implement Etag support.
      *
-     * @param \Illuminate\Http\Request $request The HTTP request.
-     * @param \Closure                 $next    Closure for the response.
+     * @param Request $request The HTTP request.
+     * @param Closure $next    Closure for the response.
+     * @psalm-param Closure(Request): Response $next    Closure for the response.
      *
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function handle(Request $request, Closure $next)
     {
@@ -32,10 +34,11 @@ class ETag
         $request->setMethod('get');
 
         // Get response
+        /** @var Response $response */
         $response = $next($request);
 
         // Generate Etag
-        $etag = md5(json_encode($response->headers->get('origin')).$response->getContent());
+        $etag = md5(json_encode($response->headers->get('origin')) . (string)$response->getContent());
 
         // Load the Etag sent by client
         $requestEtag = str_replace('"', '', $request->getETags());
