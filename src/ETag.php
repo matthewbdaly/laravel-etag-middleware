@@ -40,16 +40,11 @@ class ETag
         // Generate Etag
         $etag = md5(json_encode($response->headers->get('origin')) . (string)$response->getContent());
 
-        // Load the Etag sent by client
-        $requestEtag = str_replace('"', '', $request->getETags());
-
-        // Check to see if Etag has changed
-        if ($requestEtag && $requestEtag[0] == $etag) {
-            $response->setNotModified();
-        }
-
         // Set Etag
         $response->setEtag($etag);
+
+        // Check to see if Etag has changed. If not, send 304 and exit.
+        $response->isNotModified($request);
 
         // Set back to original method
         $request->setMethod($initialMethod); // set back to original method
