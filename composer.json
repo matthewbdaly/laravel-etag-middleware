@@ -1,14 +1,20 @@
 {
     "name": "matthewbdaly/laravel-etag-middleware",
     "description": "A Laravel middleware for adding ETags to HTTP requests to improve response times",
-    "keywords": ["laravel", "etags", "etag", "middleware", "http"],
+    "keywords": [
+        "laravel",
+        "etags",
+        "etag",
+        "middleware",
+        "http"
+    ],
     "type": "library",
     "require": {
-        "illuminate/support": "^5.5|^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/http": "^5.5|^6.0|^7.0|^8.0|^9.0|^10.0"
+        "illuminate/support": "^5.5|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "illuminate/http": "^5.5|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.2|^9.0",
+        "phpunit/phpunit": "^4.8|^5.2|^9.0|^10.5",
         "mockery/mockery": "^1.0",
         "php-coveralls/php-coveralls": "^2.1",
         "squizlabs/php_codesniffer": "^3.7",
